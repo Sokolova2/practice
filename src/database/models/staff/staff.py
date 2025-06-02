@@ -1,6 +1,5 @@
 from src.database.database import Base
 from sqlalchemy.orm import Mapped, mapped_column
-from database import database
 from sqlalchemy import String
 
 class StaffModels(Base):
