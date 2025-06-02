@@ -16,4 +16,4 @@ class OrdersModel(Base):
     discount: Mapped[float] = mapped_column(Float)
     create_data: Mapped[datetime] =  mapped_column(DateTime, default=datetime.now)
 
-    product: Mapped[ProductsModel] = relationship("ProductsModel", back_populates="news")
+    product: Mapped["ProductsModel"] = relationship("ProductsModel", back_populates="orders")
