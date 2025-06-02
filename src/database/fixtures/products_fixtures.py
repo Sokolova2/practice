@@ -9,9 +9,13 @@ async def create_product():
 
         if not product:
             products = [
-                ProductsModel(name="Laptop", price=21000.0),
-                ProductsModel(name="Phone Samsung", price=11000.0),
-                ProductsModel(name="Mouse", price=500.0),
+                ProductsModel(name="Ноутбук Lenovo", price=21000.0),
+                ProductsModel(name="Телефон Samsung", price=11000.0),
+                ProductsModel(name="Миша Logitech", price=500.0),
+                ProductsModel(name="Комп`ютер Intell", price=33000.0),
+                ProductsModel(name="Клавіатура Hator", price=500.0),
+                ProductsModel(name="Телефон Iphone 13", price=25000.0),
+                ProductsModel(name="Подовжувач Gelius", price=1000.0),
             ]
             session.add_all(products)
             await session.commit()
