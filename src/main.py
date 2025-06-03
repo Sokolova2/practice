@@ -2,6 +2,8 @@ from fastapi import FastAPI, Depends
 import uvicorn
 from src.database.database import engine, Base
 from src.database.fixtures.products_fixtures import create_product
+from src.database.models.staff.staff import StaffModels
+
 
 app = FastAPI()
 
