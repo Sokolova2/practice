@@ -21,3 +21,4 @@ class OrdersCheckSchemas(BaseModel):
     price: float
     discount: float
     create_data: datetime
+    create_data_order: datetime
