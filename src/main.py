@@ -7,11 +7,15 @@ from src.database.models.staff.staff import StaffModels
 from src.api.auth.auth_controller import auth_routes
 from src.api.cashier.cashier_controller import cashier_routes
 from src.api.sales_consultant.sales_consultant_controller import sales_consultant_routes
+from src.api.accountant.accoutant_controller import accountant_routes
+from src.api.dependencies.require_role import require_role
+
 app = FastAPI()
 
 app.include_router(auth_routes, tags=["Auth servise"])
-app.include_router(cashier_routes, tags=["Cashier service"])
-app.include_router(sales_consultant_routes, tags=["Sales consultant service"])
+app.include_router(cashier_routes, tags=["Cashier service"], dependencies=[Depends(require_role("Касир"))])
+app.include_router(sales_consultant_routes, tags=["Sales consultant service"], dependencies=[Depends(require_role("Продавець-консультант"))])
+app.include_router(accountant_routes, tags=["Accountant service"], dependencies=[Depends(require_role("Бухгалтер"))])
 
 async def init_models():
     async with engine.begin() as conn:
