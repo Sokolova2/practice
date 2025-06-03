@@ -2,10 +2,11 @@ from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
-from src.database.schemas.orders.orders import OrdersAddSchemas, OrdersGetSchemas
+from src.database.schemas.orders.orders import OrdersAddSchemas, OrdersCheckSchemas
 from src.database.models.orders.orders import OrdersModel
 from src.database.models.products.products import ProductsModel
 from src.api.cashier.discount import DiscountService
+from sqlalchemy.orm import selectinload
 
 class CashierService:
     def __init__(self, db:AsyncSession):
@@ -45,3 +46,21 @@ class CashierService:
 
         return add_order
     
+    async def check(self, id_order: int):
+        stmt = select(OrdersModel).options(selectinload(OrdersModel.product)).where(OrdersModel.id_order == id_order)
+        result = await self.db.execute(stmt)
+        check = result.scalars().first()
+
+        if check == None:
+            raise HTTPException(status_code=404, detail="Data not found")
+        
+        check_response = {
+            "id_order": check.id_order,
+            "name_product": check.product.name,
+            "price": check.price,
+            "discount": check.discount,
+            "create_data": check.create_data
+        }
+
+        return check_response
+
