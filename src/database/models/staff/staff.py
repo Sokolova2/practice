@@ -8,6 +8,6 @@ class StaffModels(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     last_name: Mapped[str] = mapped_column(String(70), nullable=False)
     first_name: Mapped[str] = mapped_column(String(70), nullable=False)
-    email: Mapped[str] = mapped_column(nullable=False)
+    login: Mapped[str] = mapped_column(nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(128), nullable=False)
     role: Mapped[str] = mapped_column(nullable=False)
