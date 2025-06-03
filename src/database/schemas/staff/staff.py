@@ -1,10 +1,10 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field
 
 class StaffAddSchemas(BaseModel):
 
     id: int 
     last_name: str = Field(max_length=1, max_length=70)
     first_name: str = Field(min_length=1, max_length=70)
-    email: EmailStr 
+    login: str = Field(min_length=1, max_length=70)
     password: str = Field(min_length=8, max_length=128)
     role: str 
