@@ -14,3 +14,10 @@ class OrdersAddSchemas(BaseModel):
 
 class OrdersUpdateSchemas(BaseModel):
     status: str
+
+class OrdersCheckSchemas(BaseModel):
+    id_order: int
+    name_product: str
+    price: float
+    discount: float
+    create_data: datetime
