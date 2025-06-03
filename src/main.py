@@ -5,11 +5,12 @@ from src.database.fixtures.products_fixtures import create_product
 from src.database.models.staff.staff import StaffModels
 from src.api.auth.auth_controller import auth_routes
 from src.api.cashier.cashier_controller import cashier_routes
-
+from src.api.sales_consultant.sales_consultant_controller import sales_consultant_routes
 app = FastAPI()
 
 app.include_router(auth_routes, tags=["Auth servise"])
 app.include_router(cashier_routes, tags=["Cashier service"])
+app.include_router(sales_consultant_routes, tags=["Sales consultant service"])
 
 async def init_models():
     async with engine.begin() as conn:
