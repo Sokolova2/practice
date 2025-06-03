@@ -13,7 +13,8 @@ class OrdersModel(Base):
     id_order: Mapped[int] = mapped_column(primary_key=True)
     id_product: Mapped[int] = mapped_column(ForeignKey("products.id_product"), nullable=False)
     status: Mapped[str] = mapped_column(String(50), default="Прийнято")
+    price: Mapped[float] = mapped_column(Float, nullable=False)
     discount: Mapped[float] = mapped_column(Float, default=0.0)
-    create_data: Mapped[datetime] =  mapped_column(DateTime, default=datetime.now)
+    create_data: Mapped[datetime] =  mapped_column(DateTime, default=datetime.now())
 
     product: Mapped["ProductsModel"] = relationship("ProductsModel", back_populates="orders")
