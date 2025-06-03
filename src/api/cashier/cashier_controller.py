@@ -18,6 +18,11 @@ async def add_product(order: OrdersAddSchemas, db: AsyncSession = Depends(get_se
     service = CashierService(db)
     return await service.add_order(order) 
 
+@cashier_routes.get("/order", summary="Get last order")
+async def get_order(db: AsyncSession = Depends(get_session)):
+    service = CashierService(db)
+    return await service.get_order()
+
 @cashier_routes.get("/check/{id_order}", summary="Get check")
 async def check(id_order: int, db: AsyncSession = Depends(get_session)):
     service = CashierService(db)
@@ -31,3 +36,4 @@ async def change_status(
 ):
     service = CashierService(db)
     return await service.change_status(id_order, new_order)
+

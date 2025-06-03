@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 from src.database.schemas.orders.orders import OrdersAddSchemas, OrdersUpdateSchemas
@@ -80,3 +80,9 @@ class CashierService:
         await self.db.refresh(order)
 
         return order
+    
+    async def get_order(self):
+        result = await self.db.execute(
+            select(OrdersModel).order_by(desc(OrdersModel.id_order)).limit(1))
+        orders = result.scalars().first()
+        return orders
