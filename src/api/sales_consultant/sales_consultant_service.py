@@ -14,10 +14,17 @@ class SalesConsultantService:
         orders = result.scalars().first()
         return orders
     
-    async def change_status(self, id_order: int, order: OrdersUpdateSchemas):
+    async def change_status(self, id_order: int, new_order: OrdersUpdateSchemas):
         stmt = select(OrdersModel).where(OrdersModel.id_order == id_order)
         result = await self.db.execute(stmt)
         order = result.scalars().first()
 
         if order == None: 
             raise HTTPException(status_code=404, detail="Order not found")
+        
+        order.status = new_order.status
+
+        await self.db.commit()
+        await self.db.refresh(order)
+
+        return order
