@@ -17,6 +17,7 @@ async def create_product():
                 ProductsModel(name="Клавіатура Hator", price=500.0, create_data=datetime(2025, 4, 29)),
                 ProductsModel(name="Телефон Iphone 13", price=25000.0, create_data=datetime(2025, 5, 27)),
                 ProductsModel(name="Подовжувач Gelius", price=1000.0, create_data=datetime(2025, 4, 19)),
+                ProductsModel(name="Подовжувач Gelius", price=1000.0, create_data=datetime(2025, 4, 19)),
             ]
             session.add_all(products)
             await session.commit()
