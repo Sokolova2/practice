@@ -1,8 +1,11 @@
 from sqlalchemy import String, Float, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.database.database import Base
-from src.database.models.orders.orders import OrdersModel
 from datetime import datetime
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.database.models.orders.orders import OrdersModel
 
 class ProductsModel(Base):
     __tablename__ = "products"
@@ -12,4 +15,4 @@ class ProductsModel(Base):
     price: Mapped[float] = mapped_column(Float, nullable=False)
     create_data: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
 
-    orders: Mapped[list[OrdersModel]] =relationship("OrdersModel", back_populates="product")
+    orders: Mapped[list["OrdersModel"]] =relationship("OrdersModel", back_populates="product")
