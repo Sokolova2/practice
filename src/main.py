@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends
 import uvicorn
 from src.database.database import engine, Base
 from src.database.fixtures.products_fixtures import create_product
+from src.database.fixtures.staff_fixtures import create_user
 from src.database.models.staff.staff import StaffModels
 from src.api.auth.auth_controller import auth_routes
 from src.api.cashier.cashier_controller import cashier_routes
@@ -20,6 +21,7 @@ async def init_models():
 async def on_startup():
     await init_models()
     await create_product()
+    await create_user()
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
