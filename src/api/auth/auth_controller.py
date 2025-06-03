@@ -16,7 +16,7 @@ async def add_user(user: StaffAddSchemas, db: AsyncSession = Depends(get_session
 @auth_routes.post("/login", summary="Login user")
 async def login(creds: StaffLoginSchemas, response: Response, db: AsyncSession = Depends(get_session)):
     service = AuthService(db)
-    return await service.login(creds=creds, responce=response)
+    return await service.login(creds=creds, response=response)
 
 @auth_routes.get("/staff", summary="Get staff")
 async def get_user(db: AsyncSession = Depends(get_session)):
