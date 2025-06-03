@@ -2,11 +2,12 @@ from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
-from src.database.schemas.orders.orders import OrdersAddSchemas, OrdersCheckSchemas
+from src.database.schemas.orders.orders import OrdersAddSchemas, OrdersUpdateSchemas
 from src.database.models.orders.orders import OrdersModel
 from src.database.models.products.products import ProductsModel
 from src.api.cashier.discount import DiscountService
 from sqlalchemy.orm import selectinload
+from datetime import datetime 
 
 class CashierService:
     def __init__(self, db:AsyncSession):
@@ -59,8 +60,23 @@ class CashierService:
             "name_product": check.product.name,
             "price": check.price,
             "discount": check.discount,
-            "create_data": check.create_data
+            "create_data": datetime.now(),
+            "create_data_order": check.create_data 
         }
 
         return check_response
 
+    async def change_status(self, id_order: int, new_order: OrdersUpdateSchemas):
+        stmt = select(OrdersModel).where(OrdersModel.id_order == id_order)
+        result = await self.db.execute(stmt)
+        order = result.scalars().first()
+
+        if order == None:
+            raise HTTPException(status_code=404, detail="Order not found")
+        
+        order.status = new_order.status
+
+        await self.db.commit()
+        await self.db.refresh(order)
+
+        return order

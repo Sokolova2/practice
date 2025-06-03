@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.database.database import get_session
 from src.api.cashier.cashier_service import CashierService
-from src.database.schemas.orders.orders import OrdersAddSchemas, OrdersCheckSchemas
+from src.database.schemas.orders.orders import OrdersAddSchemas, OrdersUpdateSchemas
 
 cashier_routes = APIRouter(
     prefix="/cashier"
@@ -22,3 +22,12 @@ async def add_product(order: OrdersAddSchemas, db: AsyncSession = Depends(get_se
 async def check(id_order: int, db: AsyncSession = Depends(get_session)):
     service = CashierService(db)
     return await service.check(id_order)
+
+@cashier_routes.patch("/order/{status}", summary="Change status to payed")
+async def change_status(
+    id_order: int,
+    new_order: OrdersUpdateSchemas,
+    db: AsyncSession = Depends(get_session)
+):
+    service = CashierService(db)
+    return await service.change_status(id_order, new_order)
