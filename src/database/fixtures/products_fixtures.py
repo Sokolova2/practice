@@ -4,6 +4,8 @@ from sqlalchemy import select
 from datetime import datetime
 
 async def create_product():
+    """Фікстури для заповння даними товарів бд"""
+
     async with new_async_session() as session:
         result = await session.execute(select(ProductsModel))
         product = result.scalars().first()
