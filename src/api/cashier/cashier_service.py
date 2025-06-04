@@ -45,7 +45,10 @@ class CashierService:
         await self.db.commit()
         await self.db.refresh(add_order)
 
-        return add_order
+        return {
+        "message": "Order successfully created",
+        "order": add_order
+    } 
     
     async def check(self, id_order: int):
         stmt = select(OrdersModel).options(selectinload(OrdersModel.product)).where(OrdersModel.id_order == id_order)
@@ -79,10 +82,16 @@ class CashierService:
         await self.db.commit()
         await self.db.refresh(order)
 
-        return order
+        return{
+            "message": "Changing status of order successfully",
+            "New order": order
+        } 
     
     async def get_order(self):
         result = await self.db.execute(
             select(OrdersModel).order_by(desc(OrdersModel.id_order)).limit(1))
         orders = result.scalars().first()
+
+        if orders == None:
+            raise HTTPException(status_code=404, detail="Not fountd order")
         return orders
