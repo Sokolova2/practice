@@ -1,0 +1,21 @@
+{
+	"id": "eabbc7e8-c3d3-4a11-84b7-a1580b2035da",
+	"values": [
+		{
+			"key": "token",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "baseUrl",
+			"value": "http://127.0.0.1:8000",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2025-06-04T16:14:27.799Z",
+	"_postman_exported_using": "Postman/11.48.3"
+}
