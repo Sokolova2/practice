@@ -7,7 +7,7 @@ from src.database.models.staff.staff import StaffModels
 from src.api.auth.auth_controller import auth_routes
 from src.api.cashier.cashier_controller import cashier_routes
 from src.api.sales_consultant.sales_consultant_controller import sales_consultant_routes
-from src.api.accountant.accoutant_controller import accountant_routes
+from src.api.accountant.accountant_controller import accountant_routes
 from src.api.dependencies.require_role import require_role
 
 app = FastAPI()
