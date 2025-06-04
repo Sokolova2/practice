@@ -20,10 +20,10 @@ class SalesConsultantService:
         if orders == None:
             raise HTTPException(status_code=404, detail="Order not found")
         
-        if orders.status != "Сплачено":
+        if orders.status != "Сплачено" and orders.status != "Виконано":
             return orders
         
-        return {"message": "Last order already paid"}
+        return {"message": "Last order already processed or paid"}
     
     async def change_status(self, id_order: int, new_order: OrdersUpdateSchemas):
         """
@@ -38,12 +38,15 @@ class SalesConsultantService:
         if order == None: 
             raise HTTPException(status_code=404, detail="Order not found")
         
-        order.status = new_order.status
+        if order.status != "Сплачено" and order.status != "Виконано": 
+            order.status = new_order.status
 
-        await self.db.commit()
-        await self.db.refresh(order)
+            await self.db.commit()
+            await self.db.refresh(order)
 
-        return{
-            "message": "Changing status of order successfully",
-            "New order": order
-        } 
+            return{
+                "message": "Changing status of order successfully",
+                "New order": order
+            } 
+        
+        return {"message": "Last order already processed or paid"}

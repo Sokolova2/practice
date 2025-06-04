@@ -68,16 +68,18 @@ class CashierService:
         if check == None:
             raise HTTPException(status_code=404, detail="Data not found")
         
-        check_response = {
+        if check.status == "Виконано":
+            check_response = {
             "id_order": check.id_order,
             "name_product": check.product.name,
             "price": check.price,
             "discount": check.discount,
             "create_data": datetime.now(),
             "create_data_order": check.create_data 
-        }
-
-        return check_response
+            }
+            return check_response
+        
+        return {"message": "Order not processed or already paid"}
 
     async def change_status(self, id_order: int, new_order: OrdersUpdateSchemas):
         """
@@ -91,15 +93,17 @@ class CashierService:
         if order == None:
             raise HTTPException(status_code=404, detail="Order not found")
         
-        order.status = new_order.status
+        if order.status == "Виконано":
+            order.status = new_order.status
+            await self.db.commit()
+            await self.db.refresh(order)
 
-        await self.db.commit()
-        await self.db.refresh(order)
-
-        return{
-            "message": "Changing status of order successfully",
-            "New order": order
-        } 
+            return{
+                "message": "Changing status of order successfully",
+                "New order": order
+            } 
+        
+        return {"message": "Order not processed or already paid"}
     
     async def get_order(self):
         """Метод для отримання останнього замовлення"""
@@ -110,4 +114,8 @@ class CashierService:
 
         if orders == None:
             raise HTTPException(status_code=404, detail="Not fountd order")
-        return orders
+        
+        if orders.status == "Виконано":
+            return orders
+        
+        return {"message": "Order not processed or already paid"}
