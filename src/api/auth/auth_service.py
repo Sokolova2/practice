@@ -108,7 +108,7 @@ class AuthService:
         response.set_cookie(config.JWT_ACCESS_COOKIE_NAME, token)
 
         return{
-            "message": f"Successfully login: {user.last_name + '' + user.first_name}",
+            "message": f"Successfully login: {user.last_name + ' ' + user.first_name}",
             "access_token": token,
             "token-type": "bearer",
             "id_user": user.id,
