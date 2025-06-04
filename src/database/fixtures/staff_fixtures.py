@@ -11,7 +11,7 @@ async def create_user():
 
         if not product:
             users = [
-                StaffModels(last_name="Петров", first_name="Петро", login="petrov_petro", password="$2b$12$VEtNgWWL4KeT1g6vxe1ruucOgvt5uryGXAc8jXV8wWCcHx.aRXuE2", role="Бухглатер"),
+                StaffModels(last_name="Петров", first_name="Петро", login="petrov_petro", password="$2b$12$VEtNgWWL4KeT1g6vxe1ruucOgvt5uryGXAc8jXV8wWCcHx.aRXuE2", role="Бухгалтер"),
                 StaffModels(last_name="Іваненко", first_name="Іван", login="ivanenko_ivan", password="$2b$12$VEtNgWWL4KeT1g6vxe1ruucOgvt5uryGXAc8jXV8wWCcHx.aRXuE2", role="Продавець-консультант"),
                 StaffModels(last_name="Коваленко", first_name="Марина", login="kovalenko_marina", password="$2b$12$VEtNgWWL4KeT1g6vxe1ruucOgvt5uryGXAc8jXV8wWCcHx.aRXuE2", role="Касир"),
             ]
