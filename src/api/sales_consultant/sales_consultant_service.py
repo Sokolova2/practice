@@ -12,7 +12,14 @@ class SalesConsultantService:
         result = await self.db.execute(
             select(OrdersModel).order_by(desc(OrdersModel.id_order)).limit(1))
         orders = result.scalars().first()
-        return orders
+        
+        if orders == None:
+            raise HTTPException(status_code=404, detail="Order not found")
+        
+        if orders.status != "Сплачено":
+            return orders
+        
+        return {"message": "Last order already paid"}
     
     async def change_status(self, id_order: int, new_order: OrdersUpdateSchemas):
         stmt = select(OrdersModel).where(OrdersModel.id_order == id_order)
@@ -27,4 +34,7 @@ class SalesConsultantService:
         await self.db.commit()
         await self.db.refresh(order)
 
-        return order
+        return{
+            "message": "Changing status of order successfully",
+            "New order": order
+        } 
