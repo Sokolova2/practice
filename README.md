@@ -51,8 +51,8 @@ venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Перед запуском додатку треба зробити .env у якому будуть дані про базу даних та JWT_TOKEN
-Обов`язково перед запуском створити базу даних в pg admin 
+Перед запуском додатку треба зробити .env у якому будуть дані про базу та JWT_TOKEN
+Обов`язково треба створити базу даних в pg admin 
 Або у терміналі прописати 
 psql -h localhost -U postgres -d your_database_name
 
