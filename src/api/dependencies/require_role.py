@@ -6,6 +6,8 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 security = HTTPBearer()
 
 def require_role(require_role: str):
+    """Метод для обмеження доступу по ролям"""
+    
     async def role_checker(credentials: HTTPAuthorizationCredentials = Depends(security)):
         token = credentials.credentials
         try:

@@ -8,10 +8,14 @@ if TYPE_CHECKING:
     from src.database.models.products.products import ProductsModel
 
 class DiscountService:
+    """Клас для нарахування знижки"""
+
     def __init__(self, db: AsyncSession):
         self.db = db
 
     async def discount(self, id_product: int) -> float:
+        """Метод для нарахування знижки для товарів, які були створені більше місяця поточної дати"""
+
         stmt = select(ProductsModel).where(ProductsModel.id_product == id_product)
         result = await self.db.execute(stmt)
         product = result.scalars().first()

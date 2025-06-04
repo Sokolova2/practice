@@ -4,6 +4,8 @@ from src.database.database import get_session
 from src.api.cashier.cashier_service import CashierService
 from src.database.schemas.orders.orders import OrdersAddSchemas, OrdersUpdateSchemas, OrderCreateResponse
 
+"""Контроллер для виклику методів із сервіса CashierService"""
+
 cashier_routes = APIRouter(
     prefix="/cashier"
 )

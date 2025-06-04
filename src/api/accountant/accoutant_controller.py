@@ -4,6 +4,8 @@ from src.database.database import get_session
 from src.api.accountant.accountant_service import AccoutantService
 from datetime import datetime
 
+"""Контроллер для виклику методів із сервіса AccoutantService"""
+
 accountant_routes = APIRouter(
     prefix="/accountant"
 )

@@ -4,6 +4,8 @@ from src.database.database import get_session
 from src.api.auth.auth_service import AuthService
 from src.database.schemas.staff.staff import StaffAddSchemas, StaffLoginSchemas
 
+"""Контроллер для виклику методів із сервіса AuthService"""
+
 auth_routes = APIRouter(
     prefix="/auth"
 )

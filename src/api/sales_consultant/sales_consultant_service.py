@@ -5,10 +5,14 @@ from src.database.models.orders.orders import OrdersModel
 from src.database.schemas.orders.orders import OrdersUpdateSchemas
 
 class SalesConsultantService:
+    """Клас для функцій, які виконує продавець-консультант"""
+
     def __init__(self, db: AsyncSession):
         self.db = db
 
     async def get_order(self):
+        """Метод для отримання останнього замовлення"""
+
         result = await self.db.execute(
             select(OrdersModel).order_by(desc(OrdersModel.id_order)).limit(1))
         orders = result.scalars().first()
@@ -22,6 +26,11 @@ class SalesConsultantService:
         return {"message": "Last order already paid"}
     
     async def change_status(self, id_order: int, new_order: OrdersUpdateSchemas):
+        """
+            Метод для зміни статусу замовлення на 'Виконано'
+            Треба ввести id замовлення та змінити статус
+        """
+        
         stmt = select(OrdersModel).where(OrdersModel.id_order == id_order)
         result = await self.db.execute(stmt)
         order = result.scalars().first()

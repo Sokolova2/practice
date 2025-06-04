@@ -19,6 +19,7 @@ config = AuthXConfig(
     JWT_TOKEN_LOCATION=["cookies"]
 )
 
+"""Хешування паролю для безпеки"""
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def hash_password(password: str) -> str:
@@ -27,10 +28,24 @@ def hash_password(password: str) -> str:
 authx = AuthX(config=config)
 
 class AuthService:
+    """
+    Клас для додавання користувача до системи та авторизації, 
+    щоб обмежити доступ для певних функцій, для певної ролі
+
+    """
+
     def __init__(self, db:AsyncSession):
         self.db = db
 
     async def add_user(self, users: StaffAddSchemas):
+        """
+            Метод для додавання користувача, для цього потрібно:
+            ввести прізвище, ім`я, логін, пароль та роль.
+            Може бути три ролі:
+                -Бухгалтер
+                -Продавець-консультант
+                -Касир
+        """
         stmt = select(StaffModels).where(StaffModels.login == users.login)
         result = await self.db.execute(stmt)
         existing_user = result.scalars().first()
@@ -55,6 +70,8 @@ class AuthService:
         }
     
     def create_jwt_token(self, id_user: str, login: str, role: str, secret_key:str):
+        """Метод для створення токену"""
+
         now = datetime.now()
         payload = {
             "sub": id_user,
@@ -67,6 +84,10 @@ class AuthService:
         return token
 
     async def login(self, creds: StaffLoginSchemas, response: Response):
+        """
+            Метод для авторизації:
+            - треба ввести логін та пароль
+        """
         stmt = select(StaffModels).where(StaffModels.login == creds.login)
         result = await self.db.execute(stmt)
         user = result.scalar_one_or_none()
@@ -96,6 +117,8 @@ class AuthService:
         }
     
     async def get_user(self) -> List[StaffGetSchemas]:
+            """Метод для отримання усіх користувачів"""
+            
             result = await self.db.execute(select(StaffModels))
             get_user = result.scalars().all()
 

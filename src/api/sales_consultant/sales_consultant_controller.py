@@ -4,6 +4,8 @@ from src.database.database import get_session
 from src.api.sales_consultant.sales_consultant_service import SalesConsultantService
 from src.database.schemas.orders.orders import OrdersUpdateSchemas
 
+"""Контроллер для виклику методів із сервіса SalesConsultantService"""
+
 sales_consultant_routes = APIRouter(
     prefix="/consultant"
 )

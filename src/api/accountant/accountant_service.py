@@ -4,13 +4,21 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from src.database.models.orders.orders import OrdersModel
 from datetime import datetime, timedelta
-from src.database.schemas.orders.orders import OrdersGetSchemas
 
 class AccoutantService:
+    """Клас для функцій, які виконує бухгалтер"""
+
     def __init__(self, db:AsyncSession):
         self.db = db
 
     async def get_orders(self, start_data: datetime, end_data: datetime):
+        """
+            Метод для отримання всіх замовлень за певний період
+            Користувач вводить початкову дату та кінцеву дату періоду за який він хочу отримати замовлення.
+            Формат дати yyyy-mm-dd
+            
+        """
+
         stmt = (
             select(OrdersModel)
             .options(selectinload(OrdersModel.product))
