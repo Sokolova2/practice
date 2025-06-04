@@ -34,9 +34,11 @@ class AccoutantService:
             response.append({
                 "id_order": order.id_order,
                 "name_product": order.product.name,
+                "status": order.status,
                 "price": order.price,
                 "discount": order.discount,
-                "create_data": order.create_data
+                "create_data": order.create_data,
+                "update_data": order.update_data
             })
 
         return response
