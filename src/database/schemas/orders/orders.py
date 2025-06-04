@@ -22,3 +22,12 @@ class OrdersCheckSchemas(BaseModel):
     discount: float
     create_data: datetime
     create_data_order: datetime
+
+class OrderCreateResponse(BaseModel):
+    message: str
+    id_order: int
+    id_product: int
+    price: float
+    discount: float
+    status: str
+    create_data: datetime
