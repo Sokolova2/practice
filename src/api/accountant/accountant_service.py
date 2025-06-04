@@ -5,7 +5,7 @@ from sqlalchemy.orm import selectinload
 from src.database.models.orders.orders import OrdersModel
 from datetime import datetime, timedelta
 
-class AccoutantService:
+class AccountantService:
     """Клас для функцій, які виконує бухгалтер"""
 
     def __init__(self, db:AsyncSession):
@@ -33,7 +33,7 @@ class AccoutantService:
         result = await self.db.execute(stmt)
         orders = result.scalars().all()
 
-        if orders == None:
+        if not orders:
             raise HTTPException(status_code=404, detail="Order not found")
         
         response = []
