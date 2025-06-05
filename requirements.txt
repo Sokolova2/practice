@@ -6,3 +6,6 @@ python-dotenv
 asyncpg
 authx
 passlib[bcrypt]
+pytest
+pytest-asyncio
+httpx
