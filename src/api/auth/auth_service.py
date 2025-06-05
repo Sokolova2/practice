@@ -122,7 +122,7 @@ class AuthService:
             result = await self.db.execute(select(StaffModels))
             get_user = result.scalars().all()
 
-            if get_user == None:
+            if not get_user:
                 raise HTTPException(status_code=404, detail="User not found")
             
             return get_user
