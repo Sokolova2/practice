@@ -30,7 +30,7 @@ async def check(id_order: int, db: AsyncSession = Depends(get_session)):
     service = CashierService(db)
     return await service.check(id_order)
 
-@cashier_routes.patch("/order/{status}", summary="Change status to payed")
+@cashier_routes.patch("/order/status/{id_order}", summary="Change status to payed")
 async def change_status(
     id_order: int,
     new_order: OrdersUpdateSchemas,
