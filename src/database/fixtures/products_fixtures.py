@@ -1,12 +1,12 @@
 from src.database.models.products.products import ProductsModel
-from src.database.database import new_async_session
+from src.database.database import async_session_app
 from sqlalchemy import select
 from datetime import datetime
 
 async def create_product():
     """Фікстури для заповння даними товарів бд"""
 
-    async with new_async_session() as session:
+    async with async_session_app() as session:
         result = await session.execute(select(ProductsModel))
         product = result.scalars().first()
 

@@ -1,11 +1,11 @@
 from src.database.models.staff.staff import StaffModels
-from src.database.database import new_async_session
+from src.database.database import async_session_app
 from sqlalchemy import select
 
 async def create_user():
     """Фікстури для заповння даними користувачів бд"""
     
-    async with new_async_session() as session:
+    async with async_session_app() as session:
         result = await session.execute(select(StaffModels))
         product = result.scalars().first()
 
