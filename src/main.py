@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends
 import uvicorn
-from src.database.database import engine, Base
+from src.database.database import engine_app, engine_test, Base
 from src.database.fixtures.products_fixtures import create_product
 from src.database.fixtures.staff_fixtures import create_user
 from src.database.models.staff.staff import StaffModels
@@ -18,9 +18,13 @@ app.include_router(sales_consultant_routes, tags=["Sales consultant service"], d
 app.include_router(accountant_routes, tags=["Accountant service"], dependencies=[Depends(require_role("Бухгалтер"))])
 
 async def init_models():
-    async with engine.begin() as conn:
+    async with engine_app.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
+async def init_models():
+    async with engine_test.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+        
 @app.on_event("startup")
 async def on_startup():
     await init_models()
