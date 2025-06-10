@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.database.database import get_session
+from src.database.database import get_session_app
 from src.api.sales_consultant.sales_consultant_service import SalesConsultantService
 from src.database.schemas.orders.orders import OrdersUpdateSchemas
 
@@ -11,7 +11,7 @@ sales_consultant_routes = APIRouter(
 )
 
 @sales_consultant_routes.get("/order", summary="Get last order")
-async def get_order(db: AsyncSession = Depends(get_session)):
+async def get_order(db: AsyncSession = Depends(get_session_app)):
     service = SalesConsultantService(db)
     return await service.get_order()
 
@@ -19,7 +19,7 @@ async def get_order(db: AsyncSession = Depends(get_session)):
 async def change_status(
     id_order: int, 
     new_order: OrdersUpdateSchemas, 
-    db:AsyncSession = Depends(get_session)
+    db:AsyncSession = Depends(get_session_app)
 ):
     service = SalesConsultantService(db)
     return await service.change_status(id_order, new_order)

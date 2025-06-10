@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.database.database import get_session
+from src.database.database import get_session_app
 from src.api.accountant.accountant_service import AccountantService
 from datetime import datetime
 
@@ -14,7 +14,7 @@ accountant_routes = APIRouter(
 async def get_order(
     start_data: datetime,
     end_data: datetime,
-    db: AsyncSession = Depends(get_session)
+    db: AsyncSession = Depends(get_session_app)
 ):
     service = AccountantService(db)
     return await service.get_orders(start_data, end_data)
