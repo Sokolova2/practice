@@ -76,3 +76,13 @@ uvicorn src.main:app --reload
 ```
 
 ## ✅ Testing
+
+Щоб протестувати застосунок, потрібно d pg admin створити нову базу даних test_db. Далі потрібно виконати такі команди
+
+```
+python -m pytest .\src\tests\test_accountant.py -s
+python -m pytest .\src\tests\test_auth.py -s
+python -m pytest .\src\tests\test_order.py -s
+python -m pytest .\src\tests\test_product.py -s
+python -m pytest .\src\tests\test_sales_consultant.py -s
+```
